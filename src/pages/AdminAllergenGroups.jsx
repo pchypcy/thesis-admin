@@ -304,16 +304,16 @@ export default function AdminAllergenGroups({ showToast, userRole }) {
   useEffect(() => { load(); }, [load]);
 
   const handleSeed = async () => {
-    if (!window.confirm('Seed default จาก EU 14 list? (idempotent — ไม่ทับของที่แก้แล้ว)')) return;
+    if (!window.confirm('โหลดกลุ่มสารก่อภูมิแพ้มาตรฐาน 14 ชนิด (EU 14) ใช่ไหม? จะไม่ทับกลุ่มที่แก้ไขไว้แล้ว')) return;
     setSeeding(true);
     try {
       const res = await axios.post(`${API_BASE_URL}/api/admin/allergen-groups/seed`);
       if (res.data?.success) {
-        showToast?.(res.data.message || 'Seed สำเร็จ');
+        showToast?.(res.data.message || 'โหลดกลุ่มมาตรฐานสำเร็จ');
         await load();
       }
     } catch (err) {
-      showToast?.(err?.response?.data?.message || 'Seed ล้มเหลว', 'error');
+      showToast?.(err?.response?.data?.message || 'โหลดไม่สำเร็จ', 'error');
     } finally {
       setSeeding(false);
     }
@@ -351,11 +351,10 @@ export default function AdminAllergenGroups({ showToast, userRole }) {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <div className="flex items-center gap-2.5 mb-1">
-            <h1 className="text-2xl font-bold text-slate-800 tracking-tight">กลุ่มอาหารแพ้ (Allergen Groups)</h1>
-            <span className="bg-rose-50 text-rose-700 text-[10px] px-2 py-0.5 rounded-md font-semibold uppercase tracking-wider border border-rose-100">Sprint 6</span>
+            <h1 className="text-2xl font-bold text-slate-800 tracking-tight">กลุ่มอาหารแพ้</h1>
           </div>
           <p className="text-sm text-slate-400">
-            จัดการรายการสารก่อภูมิแพ้ที่ user เลือกได้ใน Allergy Profile — แก้แล้วผลทันที (ไม่ต้อง deploy)
+            จัดการกลุ่มสารก่อภูมิแพ้ที่ผู้ใช้เลือกได้ในโปรไฟล์การแพ้อาหาร การแก้ไขมีผลกับผู้ใช้ทันที
           </p>
         </div>
         <div className="flex gap-2 shrink-0">
@@ -366,7 +365,7 @@ export default function AdminAllergenGroups({ showToast, userRole }) {
           <button onClick={handleSeed} disabled={seeding}
             className="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 shadow-sm transition-all active:scale-95 disabled:opacity-60">
             {seeding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
-            Seed EU 14
+            โหลดกลุ่มมาตรฐาน
           </button>
           <button onClick={() => setCreating(true)}
             className="bg-rose-600 hover:bg-rose-700 text-white px-4 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 shadow-sm transition-all active:scale-95">
@@ -404,10 +403,10 @@ export default function AdminAllergenGroups({ showToast, userRole }) {
         <div className="py-16 bg-white rounded-2xl border-2 border-dashed border-slate-200 text-center">
           <ShieldAlert className="w-12 h-12 text-slate-200 mx-auto mb-3" />
           <h3 className="text-base font-bold text-slate-600">ยังไม่มีกลุ่มอาหารแพ้ในระบบ</h3>
-          <p className="text-sm text-slate-400 mt-1 mb-4">กด "Seed EU 14" เพื่อเพิ่มกลุ่มมาตรฐาน 14 ชนิด</p>
+          <p className="text-sm text-slate-400 mt-1 mb-4">กด "โหลดกลุ่มมาตรฐาน" เพื่อเพิ่มกลุ่มมาตรฐาน 14 ชนิด</p>
           <button onClick={handleSeed} disabled={seeding}
             className="bg-rose-600 hover:bg-rose-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold inline-flex items-center gap-2 disabled:opacity-60">
-            {seeding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />} Seed EU 14
+            {seeding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />} โหลดกลุ่มมาตรฐาน
           </button>
         </div>
       ) : filtered.length === 0 ? (

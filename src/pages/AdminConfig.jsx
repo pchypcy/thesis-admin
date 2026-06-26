@@ -187,11 +187,11 @@ export default function AdminConfig({ showToast }) {
     try {
       const res = await axios.get(`${API_BASE_URL}/api/config/seed`);
       if (res.data?.success) {
-        showToast?.(`Seed สำเร็จ: ${res.data.message}`);
+        showToast?.(`โหลดค่าเริ่มต้นสำเร็จ: ${res.data.message}`);
         await load();
       }
     } catch (err) {
-      showToast?.(err?.response?.data?.message || 'Seed ล้มเหลว', 'error');
+      showToast?.(err?.response?.data?.message || 'โหลดค่าเริ่มต้นไม่สำเร็จ', 'error');
     } finally {
       setSeeding(false);
     }
@@ -241,11 +241,10 @@ export default function AdminConfig({ showToast }) {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <div className="flex items-center gap-2.5 mb-1">
-            <h1 className="text-2xl font-bold text-slate-800 tracking-tight">ตั้งค่าระบบ (Dynamic AppConfig)</h1>
-            <span className="bg-emerald-50 text-emerald-700 text-[10px] px-2 py-0.5 rounded-md font-semibold uppercase tracking-wider border border-emerald-100">Sprint 1</span>
+            <h1 className="text-2xl font-bold text-slate-800 tracking-tight">ตั้งค่าระบบ</h1>
           </div>
           <p className="text-sm text-slate-400 mt-0.5">
-            แก้ค่าเงื่อนไขระบบโดยไม่ต้อง deploy ใหม่ — บันทึก MongoDB ทันที, มีผลทุก request ถัดไป
+            ปรับค่าการทำงานต่างๆ ของระบบได้จากที่นี่ บันทึกแล้วมีผลกับการใช้งานทันที
           </p>
         </div>
         <div className="flex gap-2 shrink-0">
@@ -256,7 +255,7 @@ export default function AdminConfig({ showToast }) {
           <button onClick={handleSeed} disabled={seeding}
             className="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 shadow-sm transition-all active:scale-95 disabled:opacity-60">
             {seeding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
-            Seed Default
+            โหลดค่าเริ่มต้น
           </button>
         </div>
       </div>
@@ -267,9 +266,9 @@ export default function AdminConfig({ showToast }) {
           <CheckCircle2 className="w-6 h-6" />
         </div>
         <div className="flex-1">
-          <p className="text-sm font-black text-emerald-900">เปลี่ยนค่า → มีผลทันที (ไม่ต้อง deploy ใหม่)</p>
+          <p className="text-sm font-black text-emerald-900">เปลี่ยนค่าแล้วมีผลกับระบบทันที</p>
           <p className="text-xs text-emerald-700 mt-0.5">
-            ค่าที่เคยฝัง hardcode ในโค้ดถูกย้ายมาที่นี่ — เช่น เกณฑ์น้ำตาล WHO, ราคา VIP, แต้มต่อสแกน, GP fee
+            ปรับค่าสำคัญต่างๆ ได้จากที่นี่ เช่น เกณฑ์น้ำตาลตามมาตรฐาน WHO, ราคาสมาชิก VIP, แต้มต่อการสแกน, ค่าธรรมเนียมร้านค้า
           </p>
         </div>
       </div>
@@ -320,7 +319,7 @@ export default function AdminConfig({ showToast }) {
         <div className="py-16 bg-white rounded-2xl border-2 border-dashed border-slate-200 text-center">
           <Settings className="w-12 h-12 text-slate-200 mx-auto mb-3" />
           <h3 className="text-base font-bold text-slate-600">ยังไม่มี config ในระบบ</h3>
-          <p className="text-sm text-slate-400 mt-1 mb-4">กดปุ่ม "Seed Default" เพื่อเพิ่มค่าเริ่มต้นทั้งหมด</p>
+          <p className="text-sm text-slate-400 mt-1 mb-4">กดปุ่ม "โหลดค่าเริ่มต้น" เพื่อเพิ่มค่าเริ่มต้นทั้งหมด</p>
           <button onClick={handleSeed} disabled={seeding}
             className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold inline-flex items-center gap-2 disabled:opacity-60">
             {seeding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />} Seed Default

@@ -166,7 +166,7 @@ function CampaignModal({ mode, initial, onClose, onSave, shops = [], initialMaxT
         <div className="bg-gradient-to-r from-slate-800 to-slate-700 px-6 py-5 flex justify-between items-center shrink-0">
           <div>
             <h2 className="text-base font-bold text-white">{mode === 'create' ? '➕ สร้างแคมเปญใหม่' : '✏️ แก้ไขแคมเปญ'}</h2>
-            <p className="text-xs text-slate-400 mt-0.5">ข้อมูลจะถูกบันทึกลง MongoDB ทันที</p>
+            <p className="text-xs text-slate-400 mt-0.5">ระบบจะบันทึกให้อัตโนมัติเมื่อกดยืนยัน</p>
           </div>
           <button onClick={onClose} disabled={saving} className="w-8 h-8 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white disabled:opacity-50">
             <X className="w-4 h-4" />
@@ -513,11 +513,11 @@ export default function Coupons({ showToast, data, refreshData }) {
     try {
       const res = await axios.post(`${API_BASE_URL}/api/admin/quotas/seed`);
       if (res.data?.success) {
-        showToast(`Seed สิทธิ์สำเร็จ: สร้างใหม่ ${res.data.created} (ข้าม ${res.data.skipped})`, 'success');
+        showToast(`สร้างสิทธิ์เริ่มต้นสำเร็จ: เพิ่มใหม่ ${res.data.created} (ข้าม ${res.data.skipped})`, 'success');
         loadQuotas();
       }
     } catch (err) {
-      showToast(err?.response?.data?.message || 'Seed ไม่สำเร็จ', 'error');
+      showToast(err?.response?.data?.message || 'สร้างสิทธิ์ไม่สำเร็จ', 'error');
     } finally {
       setSeedingQuotas(false);
     }
@@ -619,7 +619,6 @@ export default function Coupons({ showToast, data, refreshData }) {
             <h1 className="text-2xl font-bold text-slate-800 tracking-tight">คูปองและรางวัล</h1>
             <p className="text-sm text-slate-400 mt-0.5">
               จัดการแคมเปญ — <span className="font-semibold text-slate-600">{activeCampaigns.length}</span> แคมเปญ
-              {' · '}บันทึกลง MongoDB ทันที
             </p>
           </div>
           <div className="flex w-full md:w-auto gap-2.5">
@@ -638,7 +637,7 @@ export default function Coupons({ showToast, data, refreshData }) {
             <button onClick={handleSeedQuotas} disabled={seedingQuotas} title="สร้างสิทธิ์เริ่มต้นให้แคมเปญที่ยังไม่มี"
               className="h-11 px-3 bg-white border border-slate-200 text-slate-500 hover:text-amber-600 hover:border-amber-200 rounded-xl text-xs font-semibold shadow-sm transition-all active:scale-95 disabled:opacity-50 flex items-center gap-1.5">
               {seedingQuotas ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Ticket className="w-3.5 h-3.5" />}
-              Seed สิทธิ์
+              สร้างสิทธิ์เริ่มต้น
             </button>
             <button onClick={() => setModal({ mode: 'create' })}
               className="bg-slate-900 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl text-sm font-medium flex items-center gap-1.5 shadow-sm transition-all active:scale-95 shrink-0">
