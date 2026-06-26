@@ -2,4 +2,10 @@
 
 @theme {
   --font-sans: "Prompt", sans-serif;
+  --default-font-family: "Prompt", sans-serif;
+}
+
+/* ล็อกฟอนต์ทั้งเว็บให้เป็น Prompt เสมอ (ทุกเครื่อง/มือถือ) ไม่ตกไปฟอนต์ระบบ */
+html, body, button, input, select, textarea {
+  font-family: "Prompt", sans-serif;
 }
