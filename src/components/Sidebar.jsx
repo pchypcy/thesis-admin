@@ -1,7 +1,7 @@
 import React from 'react';
-import { PieChart, Users, Store, Ticket, LogOut, QrCode, Home, Banknote, Settings, Receipt, ShieldCheck, Wallet, SlidersHorizontal, ShieldAlert } from 'lucide-react';
+import { PieChart, Users, Store, Ticket, LogOut, QrCode, Home, Banknote, Settings, Receipt, ShieldCheck, Wallet, SlidersHorizontal, ShieldAlert, X } from 'lucide-react';
 
-export default function Sidebar({ activeView, handleNavClick, handleLogout, userRole }) {
+export default function Sidebar({ activeView, handleNavClick, handleLogout, userRole, open = false, onClose }) {
   const isMerchant = userRole === 'merchant';
   const merchantName = localStorage.getItem('merchantName') || 'ร้านค้า';
 
@@ -33,7 +33,7 @@ export default function Sidebar({ activeView, handleNavClick, handleLogout, user
     return (
       <li>
         <button
-          onClick={() => handleNavClick(id)}
+          onClick={() => { handleNavClick(id); onClose?.(); }}
           className={`w-full flex items-center px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all ${
             active
               ? `${ci.activeBg} ${ci.activeText} border ${ci.activeBorder}`
@@ -48,15 +48,26 @@ export default function Sidebar({ activeView, handleNavClick, handleLogout, user
   };
 
   return (
-    <aside className="w-56 bg-white border-r border-slate-200 flex flex-col z-20 shrink-0">
+    <>
+      {/* backdrop — แตะเพื่อปิด (เฉพาะมือถือ) */}
+      {open && <div className="fixed inset-0 bg-black/40 z-30 md:hidden" onClick={onClose} />}
+
+      <aside
+        className={`fixed md:static inset-y-0 left-0 z-40 w-64 md:w-56 bg-white border-r border-slate-200 flex flex-col shrink-0 transform transition-transform duration-300 md:translate-x-0 shadow-2xl md:shadow-none ${open ? 'translate-x-0' : '-translate-x-full'}`}
+      >
 
       {/* Logo bar */}
-      <div
-        className="h-16 flex items-center px-5 border-b border-slate-100 cursor-pointer gap-2.5"
-        onClick={() => handleNavClick(isMerchant ? 'merchant-dashboard' : 'dashboard')}
-      >
-        <img src="/Logo-Pic.png" alt="InGreen" className="w-8 h-8 object-contain" />
-        <img src="/Logo-Text.png" alt="InGreen" className="h-5 w-auto object-contain mt-1" />
+      <div className="h-16 flex items-center px-5 border-b border-slate-100 gap-2.5">
+        <div
+          className="flex items-center gap-2.5 cursor-pointer flex-1 min-w-0"
+          onClick={() => { handleNavClick(isMerchant ? 'merchant-dashboard' : 'dashboard'); onClose?.(); }}
+        >
+          <img src="/Logo-Pic.png" alt="InGreen" className="w-8 h-8 object-contain" />
+          <img src="/Logo-Text.png" alt="InGreen" className="h-5 w-auto object-contain mt-1" />
+        </div>
+        <button onClick={onClose} className="md:hidden p-1.5 -mr-2 text-slate-400 hover:text-slate-600" aria-label="ปิดเมนู">
+          <X className="w-5 h-5" />
+        </button>
       </div>
 
       {/* Role label */}
@@ -120,6 +131,7 @@ export default function Sidebar({ activeView, handleNavClick, handleLogout, user
           <LogOut className="w-3.5 h-3.5 text-slate-300 group-hover:text-red-400 transition-colors" />
         </div>
       </div>
-    </aside>
+      </aside>
+    </>
   );
 }

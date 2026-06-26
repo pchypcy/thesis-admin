@@ -80,6 +80,9 @@ function MainApp() {
   // Dynamic CI for current role/shop
   const [shopCi, setShopCi] = useState(null);
 
+  // ★ Responsive: เปิด/ปิด sidebar แบบ drawer บนมือถือ
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   // Derive shopCi whenever role or data changes
   useEffect(() => {
     if (userRole === 'merchant' && dashboardData) {
@@ -212,16 +215,16 @@ function MainApp() {
         ))}
       </div>
 
-      {/* Sidebar — ซ่อนบน mobile เมื่อ fullscreen view */}
-      <div className={isFullscreenMobile ? 'hidden md:flex' : 'flex'}>
-        <Sidebar
-          activeView={activeView}
-          handleNavClick={handleNavClick}
-          handleLogout={handleLogout}
-          userRole={userRole}
-          shopCi={shopCi}
-        />
-      </div>
+      {/* Sidebar — drawer บนมือถือ (overlay), static บน desktop */}
+      <Sidebar
+        activeView={activeView}
+        handleNavClick={handleNavClick}
+        handleLogout={handleLogout}
+        userRole={userRole}
+        shopCi={shopCi}
+        open={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
 
       <main className="flex-1 flex flex-col h-screen overflow-hidden relative">
         {/* Header — ซ่อนบน mobile เมื่อ fullscreen view */}
@@ -233,6 +236,7 @@ function MainApp() {
             isLoadingData={isLoadingData}
             userRole={userRole}
             shopCi={shopCi}
+            onMenuClick={() => setSidebarOpen(true)}
           />
         )}
         {/* desktop ยังต้องมี Header เสมอ */}

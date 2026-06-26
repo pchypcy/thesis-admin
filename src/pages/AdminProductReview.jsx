@@ -688,7 +688,7 @@ export default function AdminProductReview({ showToast }) {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-2 sm:gap-4">
         <div className="bg-white border border-slate-200 rounded-2xl p-5">
           <div className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">รอตรวจสอบ</div>
           <div className="text-3xl font-black text-emerald-700">{items.length}</div>

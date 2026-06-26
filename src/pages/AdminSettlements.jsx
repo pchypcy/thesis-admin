@@ -384,7 +384,7 @@ export default function AdminSettlements({ showToast }) {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-4 gap-4 p-6 border-b border-slate-100">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 sm:p-6 border-b border-slate-100">
             <div>
               <div className="text-xs text-slate-500 font-bold uppercase">ร้านค้า</div>
               <div className="text-2xl font-black text-slate-800 mt-1">{preview.totalMerchants}</div>
