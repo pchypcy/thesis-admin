@@ -322,7 +322,7 @@ export default function AdminConfig({ showToast }) {
           <p className="text-sm text-slate-400 mt-1 mb-4">กดปุ่ม "โหลดค่าเริ่มต้น" เพื่อเพิ่มค่าเริ่มต้นทั้งหมด</p>
           <button onClick={handleSeed} disabled={seeding}
             className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold inline-flex items-center gap-2 disabled:opacity-60">
-            {seeding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />} Seed Default
+            {seeding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />} โหลดค่าเริ่มต้น
           </button>
         </div>
       ) : filtered.length === 0 ? (
